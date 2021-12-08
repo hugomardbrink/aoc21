@@ -2,29 +2,32 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <numeric>
+
+const std::vector<int>& readToInt(const std::string& path);
 
 int main()
 {
-  std::ifstream inputFile("../input/01.txt");
-  std::string input;
-  std::vector<int> values;
+  std::vector<int> depths = readToInt("../input/01.txt");
       
-  while(std::getline(inputFile, input))
-  {
-    values.push_back(std::stoi(input));
-  }
-
-  inputFile.close();
-
   int increases = 0;
-  for(auto i = 0; i < values.size() - 3; i++)
-  {
-    increases += 1 * (values[i]+values[i+1]+values[i+2] < values[i+1]+values[i+2]+values[i+3]);
-  }
+  for(auto i = 0; i < depths.size() - 3; i++)
+    increases += 1 * (depths[i]+depths[i+1]+depths[i+2] < depths[i+1]+depths[i+2]+depths[i+3]);
 
   std::cout << increases << std::endl;
 
   return 0;
 }
 
+const std::vector<int>& readToInt(const std::string& path)
+{
+  std::ifstream inputFile(path);
+  static std::vector<int> inputs;
+   
+  std::string input;
+  while(std::getline(inputFile, input))
+    inputs.push_back(std::stoi(input));
+
+  inputFile.close();  
+
+  return inputs;
+}

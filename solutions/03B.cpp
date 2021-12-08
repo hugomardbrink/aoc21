@@ -16,10 +16,10 @@ std::string filterCommonBinary(bool common, std::vector<std::string> v);
 
 int main() 
 {
-  std::vector<std::string> inputs = readToString("../input/03.txt");
+  std::vector<std::string> rates = readToString("../input/03.txt");
   
-  std::bitset<bSize> o{filterCommonBinary(true, inputs)};
-  std::bitset<bSize> c{filterCommonBinary(false, inputs)};
+  std::bitset<bSize> o{filterCommonBinary(true, rates)};
+  std::bitset<bSize> c{filterCommonBinary(false, rates)};
   
   std::cout << o.to_ulong() * c.to_ulong() << std::endl;
   
@@ -47,13 +47,12 @@ const void getGammaEpsilon(std::bitset<bSize>& g,
   int bitOccurence [bSize]{};
 
   for(const auto& el : v)
-    for(int b = 0; b < bSize; b++)
+    for(auto b = 0; b < bSize; b++)
       bitOccurence[b] += el[b] - 48;
 
-  for(int b = 0; b < bSize; b++)
+  for(auto b = 0; b < bSize; b++)
     g.set(bSize-b-1, bitOccurence[b] >= round((float) v.size()/2));
   
-
   e = ~g;  
 }
 
@@ -61,12 +60,9 @@ const void filterCommonBit(int bit, const std::bitset<bSize>& f, std::vector<std
 {
   std::vector<std::string> nv;
   
-
-  for(int i = 0; i < v.size(); i++) {
+  for(auto i = 0; i < v.size(); i++) 
     if(f[bSize-bit-1] == v[i][bit] - 48)
       nv.push_back(v[i]);
-  }
-
 
   v.clear();
   for(const auto& e : nv)
@@ -77,7 +73,7 @@ std::string filterCommonBinary(bool common, std::vector<std::string> v)
 {
   std::bitset<bSize> g, e;
 
-  for(int b = 0; b < bSize; b++)
+  for(auto b = 0; b < bSize; b++)
   {
     getGammaEpsilon(g, e, v);
     filterCommonBit(b, common ? g : e, v);

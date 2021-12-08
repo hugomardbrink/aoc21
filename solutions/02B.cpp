@@ -1,19 +1,21 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+
+const std::vector<std::string>& readToString(const std::string& path);
 
 int main() 
 {
-  std::ifstream inputFile("../input/02.txt");
-  std::string input;
+  std::vector<std::string> commands = readToString("../input/02.txt");
   long h,d,a = 0;
 
-  while(std::getline(inputFile, input))
+  for(auto& command : commands)
   {
-    input.pop_back();
-    int val = input.back() - 48;
+    command.pop_back();
+    int val = command.back() - 48;
 
-    switch(input.front())
+    switch(command.front())
     {
       case 'f': d += a * val;
                 h += val; break;
@@ -22,9 +24,19 @@ int main()
     }
   }
 
-  inputFile.close();
-
   std::cout << d*h << std::endl;
 
   return 0;
+}
+
+const std::vector<std::string>& readToString(const std::string& path)
+{
+  std::ifstream inputFile(path);
+  std::string input;
+  static std::vector<std::string> inputs;
+   
+  while(std::getline(inputFile, input))
+    inputs.push_back(input);
+
+  return inputs;
 }

@@ -13,17 +13,15 @@ const void getGammaEpsilon(std::bitset<bSize>& g,
 
 int main() 
 {
-
-  std::vector<std::string> inputs = readToString("../input/03.txt");
+  std::vector<std::string> rates = readToString("../input/03.txt");
   std::bitset<bSize> g, e;
 
-  getGammaEpsilon(g, e, inputs);
+  getGammaEpsilon(g, e, rates);
 
   std::cout << (g.to_ulong() * e.to_ulong()) << std::endl;
 
   return 0;
 }
-
 
 const std::vector<std::string>& readToString(const std::string& path)
 {
@@ -46,10 +44,10 @@ const void getGammaEpsilon(std::bitset<bSize>& g,
   int bitOccurence [bSize]{};
 
   for(const auto& el : v)
-    for(int b = 0; b < bSize; b++)
+    for(auto b = 0; b < bSize; b++)
       bitOccurence[b] += el[b] - 48;
 
-  for(int b = 0; b < bSize; b++)
+  for(auto b = 0; b < bSize; b++)
     g.set(bSize-b-1, bitOccurence[b] > v.size()/2);
 
   e = ~g;  
