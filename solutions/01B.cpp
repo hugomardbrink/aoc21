@@ -9,7 +9,7 @@ int main()
 {
   std::vector<int> depths = readToInt("../input/01.txt");
       
-  int increases = 0;
+  int increases{};
   for(auto i = 0; i < depths.size() - 3; i++)
     increases += 1 * (depths[i]+depths[i+1]+depths[i+2] < depths[i+1]+depths[i+2]+depths[i+3]);
 

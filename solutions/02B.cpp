@@ -3,12 +3,12 @@
 #include <string>
 #include <vector>
 
-const std::vector<std::string>& readToString(const std::string& path);
+std::vector<std::string> readToString(const std::string& path);
 
 int main() 
 {
   std::vector<std::string> commands = readToString("../input/02.txt");
-  long h,d,a = 0;
+  long h{},d{},a{};
 
   for(auto& command : commands)
   {
@@ -29,14 +29,16 @@ int main()
   return 0;
 }
 
-const std::vector<std::string>& readToString(const std::string& path)
+std::vector<std::string> readToString(const std::string& path)
 {
   std::ifstream inputFile(path);
   std::string input;
-  static std::vector<std::string> inputs;
+  std::vector<std::string> inputs;
    
   while(std::getline(inputFile, input))
     inputs.push_back(input);
+
+  inputFile.close();
 
   return inputs;
 }
